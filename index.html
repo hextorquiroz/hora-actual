@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .reloj-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 400px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        #reloj {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+        }
+
+        #fecha {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        #dia {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+        }
+
+        .separador {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 20px 0;
+        }
+
+        @media (max-width: 480px) {
+            .reloj-container {
+                min-width: 300px;
+                padding: 30px 20px;
+            }
+            
+            #reloj {
+                font-size: 2.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            #fecha {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reloj-container">
+        <h1>Reloj Digital</h1>
+        <div id="reloj">00:00:00</div>
+        <div class="separador"></div>
+        <div id="fecha">Fecha</div>
+        <div id="dia">Día</div>
+    </div>
+
+    <script>
+        function actualizarReloj() {
+            const ahora = new Date();
+            
+            // Obtener horas, minutos y segundos
+            let horas = ahora.getHours();
+            let minutos = ahora.getMinutes();
+            let segundos = ahora.getSeconds();
+            
+            // Agregar ceros a la izquierda si es necesario
+            horas = horas < 10 ? '0' + horas : horas;
+            minutos = minutos < 10 ? '0' + minutos : minutos;
+            segundos = segundos < 10 ? '0' + segundos : segundos;
+            
+            // Mostrar la hora
+            const horaCompleta = horas + ':' + minutos + ':' + segundos;
+            document.getElementById('reloj').textContent = horaCompleta;
+            
+            // Obtener fecha
+            const opciones = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const fechaCompleta = ahora.toLocaleDateString('es-ES', opciones);
+            document.getElementById('fecha').textContent = fechaCompleta;
+            
+            // Obtener día de la semana
+            const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const diaActual = dias[ahora.getDay()];
+            document.getElementById('dia').textContent = diaActual;
+        }
+        
+        // Actualizar el reloj inmediatamente
+        actualizarReloj();
+        
+        // Actualizar el reloj cada segundo
+        setInterval(actualizarReloj, 1000);
+    </script>
+</body>
+</html>
